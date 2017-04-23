@@ -1,0 +1,29 @@
+{
+  "name": "Bloombox API Client",
+  "version": "0.0.1",
+  "authors": [
+    "Sam Gammon <sam@momentum.io>"
+  ],
+  "description": "Bloombox API client JS and Polymer element.",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "bloombox",
+    "bloomware",
+    "api-client"
+  ],
+  "license": "Private, all rights reserved",
+  "homepage": "https://bloombox.io",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.7.0"
+  }
+}

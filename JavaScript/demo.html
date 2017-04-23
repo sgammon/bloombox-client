@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Bloombox JS API Client: Demo</title>
+</head>
+<style>
+  pre:before {
+    display: block;
+    text-transform: uppercase;
+    font-size: 120%;
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+  }
+
+  pre {
+    padding: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+  }
+
+  #request:before {
+    content: 'request';
+  }
+
+  #response:before {
+    content: 'response';
+  }
+</style>
+<body>
+
+<b>Open the console to see what's going on. Here's a sample RPC call to the Embed API:</b>
+
+<pre id="request">
+... loading ...
+</pre>
+
+<br />
+<br />
+
+<pre id="response">
+... loading ...
+</pre>
+
+<script id="requestJS" type="text/javascript">
+  function bloomboxAPIReady() {
+    new BloomboxAPI.EmbedAPI("AIzaSyAlKQb0_vGxIhaoWrK0D6aEhuVD3TJJSCE").view("mm", "sacramento", function(response) {
+      console.log("Success!", response.result);
+      document.getElementById("response").textContent = JSON.stringify(response.result, null, '  ');
+    }, function (failure) {
+      console.error("Error :(", failure);
+    });
+  };
+</script>
+<script type="text/javascript">
+  document.getElementById("request").textContent = document.getElementById("requestJS").textContent;
+</script>
+<script id="bbapi" type="text/javascript" src="bloombox-api-client-0.0.1.min.js" defer async></script>
+</body>
+</html>

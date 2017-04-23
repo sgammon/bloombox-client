@@ -1,0 +1,49 @@
+{
+  "name": "bloombox-api-client",
+  "version": "0.0.1",
+  "description": "Bloombox API Client for JavaScript",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bloombox/bloombox-client.git"
+  },
+  "keywords": [
+    "polymer",
+    "web-components",
+    "bloombox",
+    "public",
+    "embed"
+  ],
+  "author": "Sam Gammon <sam@momentum.io>",
+  "license": "Private, all rights reserved",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/bloombox/bloombox-embedded-menu/issues"
+  },
+  "homepage": "https://github.com/bloombox/bloombox-embedded-menu",
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "chai": "^3.5.0",
+    "google-closure-compiler": "^20170218.0.0",
+    "gulp": "^3.8.5",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-load-plugins": "^0.5.3",
+    "gulp-open": "^2.0.0",
+    "gulp-shell": "^0.5.2",
+    "gulp-util": "^3.0.4",
+    "isparta": "^4.0.0",
+    "karma": "^1.6.0",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.3.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-spec-reporter": "0.0.31",
+    "merge-stream": "^1.0.1",
+    "mocha": "^3.3.0",
+    "require-dir": "^0.1.0",
+    "run-sequence": "^0.3.6",
+    "underscore": "^1.8.3"
+  }
+}
