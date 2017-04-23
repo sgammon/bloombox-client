@@ -1,0 +1,8 @@
+*.pyc
+**/*.pyc
+.Python
+man
+bin
+include
+lib
+.oauth2client.dat
