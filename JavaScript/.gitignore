@@ -2,3 +2,5 @@
 coverage/
 target/
 node_modules/
+components/
+*.iws

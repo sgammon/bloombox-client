@@ -4,6 +4,7 @@
 #
 
 TARGET ?= target
+DEPENDENCIES ?= node_modules components
 
 
 ## -- Commands
@@ -11,9 +12,9 @@ TARGET ?= target
 all: build test  ## Default routine - build the JavaScript client.
 	@echo "Ready to work with Bloombox API Client for JavaScript."
 
-build: node_modules $(TARGET)  ## Build the JavaScript client.
+build: $(DEPENDENCIES) $(TARGET)  ## Build the JavaScript client.
 
-test: node_modules $(TARGET)  ## Run the testsuite for the JavaScript client, atop PhantomJS.
+test: $(DEPENDENCIES) $(TARGET)  ## Run the testsuite for the JavaScript client, atop PhantomJS.
 	@echo "Running JavaScript Client testsuite..."
 	@gulp test
 
@@ -52,6 +53,10 @@ $(TARGET):
 node_modules:
 	@echo "Installing Node modules..."
 	@yarn
+
+components:
+	@echo "Installing Bower components..."
+	@bower install
 
 
 ## -- Docs

@@ -58,11 +58,11 @@ function _sendLog(severity, module, messages) {
   switch (severity) {
     case 0: console.info.apply(console, items); break;
     case 1: console.warn.apply(console, items); break;
-    case 2:  //noinspection ES6ModulesDependencies
+    case 2:  //noinspection ES6ModulesDependencies,JSUnresolvedFunction
       console.error.apply(console, items); break;
-    case 3:  //noinspection ES6ModulesDependencies
+    case 3:  //noinspection ES6ModulesDependencies,JSUnresolvedFunction
       console.error.apply(console, items); break;
-    default:  //noinspection ES6ModulesDependencies
+    default:  //noinspection ES6ModulesDependencies,JSUnresolvedFunction
       console.log.apply(console, items); break;
   }
 }
