@@ -1,8 +1,18 @@
 
-/**
- * Bloombox - Common - API Tools
+/*
+ * Copyright © 2017, Momentum Ideas Co. All rights reserved.
  *
- * @fileoverview JavaScript RPC layer.
+ * Source program code in this file and package are proprietary
+ * Intellectual Property (IP) of Momentum Ideas, Co Unauthorized
+ * reproduction, duplication, compilation, or publication of this
+ * code are prohibited without prior written consent from a
+ * duly-authorized officer of Momentum Ideas, Co.
+ */
+
+/**
+ * Bloombox - API - Embed Service
+ *
+ * @fileoverview Provides access to the Embed API via JS.
  * @author sam@momentum.io (Sam Gammon)
  */
 
@@ -148,8 +158,3 @@ EmbedAPI.prototype['view'] = function(partner, location, cbk, err, style) {
   var op = new EmbeddedMenu(this.key, partner, location, style);
   return op.view(cbk, err);
 };
-
-
-/** - exports - **/
-window['EmbedAPI'] = EmbedAPI;
-window['EmbeddedMenu'] = EmbeddedMenu;

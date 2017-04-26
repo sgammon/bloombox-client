@@ -1,2 +1,6 @@
 --strict
 --jsdoc
+-x gulpfile.js
+-x=gulpfile.js
+--custom_jsdoc_tags="polymerBehavior"
+--max_line_length=120

@@ -1,6 +1,16 @@
 
+/*
+ * Copyright © 2017, Momentum Ideas Co. All rights reserved.
+ *
+ * Source program code in this file and package are proprietary
+ * Intellectual Property (IP) of Momentum Ideas, Co Unauthorized
+ * reproduction, duplication, compilation, or publication of this
+ * code are prohibited without prior written consent from a
+ * duly-authorized officer of Momentum Ideas, Co.
+ */
+
 /**
- * Bloombox API: Tools
+ * Bloombox - API - Tools
  *
  * @fileoverview Provides tools for loading APIs.
  */
@@ -37,7 +47,7 @@ function _checkClientAndContinue(callback) {
       setTimeout(_checkClientAndContinue(callback), 0);
     }
   });
-};
+}
 
 
 /**
@@ -47,15 +57,16 @@ function _checkClientAndContinue(callback) {
  */
 function setupAPIClient(callback) {
   /* istanbul ignore if  */
-  if ('gapi' in window && 'client' in window['gapi'])
-    return callback();
-
-  // we don't have support - load up components, then bootstrap after that
-  Logging['say']('Bloombox:API', 'Loading Google Client API.');
-  var e = document.createElement('script');
-  e.async = true;
-  e.defer = true;
-  e.src = clientAPIScript;
-  e.addEventListener('load', _checkClientAndContinue(callback));
-  document.body.appendChild(e);
-};
+  if ('gapi' in window && 'client' in window['gapi']) {
+    callback();
+  } else {
+    // we don't have support - load up components, then bootstrap after that
+    Logging['say']('Bloombox:API', 'Loading Google Client API.');
+    var e = document.createElement('script');
+    e.async = true;
+    e.defer = true;
+    e.src = clientAPIScript;
+    e.addEventListener('load', _checkClientAndContinue(callback));
+    document.body.appendChild(e);
+  }
+}

@@ -12,6 +12,16 @@
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
   </component>
+  <component name="CopyrightManager" default="momentum">
+    <copyright>
+      <option name="allowReplaceRegexp" value="Momentum Ideas Co." />
+      <option name="notice" value="Copyright © 2017, Momentum Ideas Co. All rights reserved.&#10;&#10;Source program code in this file and package are proprietary&#10;Intellectual Property (IP) of Momentum Ideas, Co Unauthorized&#10;reproduction, duplication, compilation, or publication of this&#10;code are prohibited without prior written consent from a&#10;duly-authorized officer of Momentum Ideas, Co." />
+      <option name="myName" value="momentum" />
+    </copyright>
+    <module2copyright>
+      <element module="All" copyright="momentum" />
+    </module2copyright>
+  </component>
   <component name="Encoding">
     <file url="PROJECT" charset="UTF-8" />
   </component>
@@ -607,6 +617,13 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="ProjectDictionaryState">
+    <dictionary name="sam">
+      <words>
+        <w>bootstrapper</w>
+      </words>
+    </dictionary>
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Bloombox JavaScript Client.iml" filepath="$PROJECT_DIR$/Bloombox JavaScript Client.iml" />
@@ -636,6 +653,9 @@
     <option name="externalProjectsViewState">
       <projects_view />
     </option>
+  </component>
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="masterDetails">
     <states>

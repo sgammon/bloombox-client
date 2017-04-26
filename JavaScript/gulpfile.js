@@ -2,17 +2,22 @@
 // jshint node: true
 
 var _ = require('underscore'),
+    $ = require('gulp-load-plugins')(),
     merge = require('merge-stream'),
     path = require('path'),
     gulp = require('gulp'),
     open = require('gulp-open'),
     gutil = require('gulp-util'),
+    sourcemaps = require('gulp-sourcemaps'),
+    crisper = require('gulp-crisper'),
+    rename = require('gulp-rename'),
     browserSync = require('browser-sync'),
-    $ = require('gulp-load-plugins')(),
     googleClosureCompiler = require('google-closure-compiler').gulp(),
     del = require('del'),
     Server = require('karma').Server,
     istanbul = require('gulp-istanbul'),
+    vulcanize = require('gulp-vulcanize'),
+    polymerRename = require('polymer-rename'),
     reload = browserSync.reload;
 
 let _version = "0.0.1";
@@ -31,12 +36,26 @@ let sourcePrefix = "src/",
           sourcePrefix + "api/embed/_base.js",
           sourcePrefix + "api/embed/index.js"
         ],
+        minimal: [
+          sourcePrefix + "api/_base.js",
+          sourcePrefix + "api/tools.js",
+          sourcePrefix + "api/client.js",
+          sourcePrefix + "api/all.js",
+          sourcePrefix + "api/exports.js"
+        ],
         all: [
           sourcePrefix + "api/_base.js",
           sourcePrefix + "api/tools.js",
-          sourcePrefix + "api/all.js"
+          sourcePrefix + "api/client.js",
+          sourcePrefix + "api/all.js",
+          sourcePrefix + "api/boot.js",
+          sourcePrefix + "api/exports.js",
         ]
-      }
+      },
+      polymer: [
+        sourcePrefix + "polymer/bloombox-api-client.js",
+        sourcePrefix + "polymer/bloombox-api-client-behavior.js"
+      ]
     }
   },
 
@@ -60,6 +79,16 @@ let sourcePrefix = "src/",
         },
         advanced: {
           compilation_level: "ADVANCED_OPTIMIZATIONS"
+        },
+        polymer: {
+          compilation_level: "ADVANCED_OPTIMIZATIONS",
+          polymer_pass: true,
+          externs: [
+            require.resolve("polymer-rename/polymer-rename-externs.js"),
+            require.resolve("google-closure-compiler/contrib/externs/polymer-1.0.js"),
+            require.resolve("google-closure-compiler/contrib/externs/google_loader_api.js"),
+            require.resolve("google-closure-compiler/contrib/externs/google_universal_analytics_api.js")
+          ]
         }
       },
     },
@@ -69,14 +98,18 @@ let sourcePrefix = "src/",
 
       scripts: [
         {closure: true,
-         config: "advanced",
+         config: "polymer",
          module: [
            "common:" + countSources(sources.scripts.common),
-           "embed:" + countSources(sources.scripts.api.embed) + ":common"
+           "api:" + countSources(sources.scripts.api.minimal) + ":common",
+           "embed:" + countSources(sources.scripts.api.embed) + ":common",
+           "component:" + countSources(sources.scripts.polymer) + ":api"
          ],
          sources: []
            .concat(sources.scripts.common)
-           .concat(sources.scripts.api.embed)},
+           .concat(sources.scripts.api.minimal)
+           .concat(sources.scripts.api.embed)
+           .concat(sources.scripts.polymer)},
         {closure: true,
          config: "advanced",
          target: "bloombox-api-client-" + _version,
@@ -90,10 +123,6 @@ function renameCompiledJs() {
     if (path.extname.indexOf(".min") === -1)
       path.extname = ".min.js";
   });
-}
-
-function listDir(dir) {
-  return walkSync(dir, false);
 }
 
 function countSources(dir) {
