@@ -8,6 +8,14 @@ VERSION ?= 0.0.1
 TARGET ?= target
 DEPENDENCIES ?= node_modules components
 
+BUILDBOT ?= 0
+
+ifeq ($(BUILDBOT),1)
+DEPENDENCY_COMMAND ?= npm install
+else
+DEPENDENCY_COMMAND ?= yarn
+endif
+
 
 ## -- Commands
 
@@ -59,7 +67,7 @@ $(TARGET):
 
 node_modules:
 	@echo "Installing Node modules..."
-	@yarn
+	@$(DEPENDENCY_COMMAND)
 
 components:
 	@echo "Installing Bower components..."
