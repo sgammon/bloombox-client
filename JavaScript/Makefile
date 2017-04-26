@@ -30,7 +30,7 @@ build: $(DEPENDENCIES) $(TARGET)  ## Build the JavaScript client.
 
 test: $(DEPENDENCIES) $(TARGET) $(TEST_SETUP)  ## Run the testsuite for the JavaScript client, atop PhantomJS.
 	@echo "Running JavaScript Client testsuite..."
-	@$(TEST_ENVIRONMENT) gulp test
+	@$(TEST_ENVIRONMENT) karma start --single-run
 
 release: clean build test  ## Clean, and then build a release copy of the JavaScript client.
 	@echo "Building release tarball bloombox-js-client-$(VERSION).tar.gz..."
