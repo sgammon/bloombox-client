@@ -12,8 +12,12 @@ BUILDBOT ?= 0
 
 ifeq ($(BUILDBOT),1)
 DEPENDENCY_COMMAND ?= npm install
+TEST_SETUP ?= setup_x
+TEST_ENVIRONMENT ?= DISPLAY=99.0 CHROME_BIN=$(which google-chrome)
 else
 DEPENDENCY_COMMAND ?= yarn
+TEST_SETUP ?=
+TEST_ENVIRONMENT ?=
 endif
 
 
@@ -24,9 +28,9 @@ all: build test  ## Default routine - build the JavaScript client.
 
 build: $(DEPENDENCIES) $(TARGET)  ## Build the JavaScript client.
 
-test: $(DEPENDENCIES) $(TARGET)  ## Run the testsuite for the JavaScript client, atop PhantomJS.
+test: $(DEPENDENCIES) $(TARGET) $(TEST_SETUP)  ## Run the testsuite for the JavaScript client, atop PhantomJS.
 	@echo "Running JavaScript Client testsuite..."
-	@gulp test
+	@$(TEST_ENVIRONMENT) gulp test
 
 release: clean build test  ## Clean, and then build a release copy of the JavaScript client.
 	@echo "Building release tarball bloombox-js-client-$(VERSION).tar.gz..."
@@ -57,6 +61,10 @@ forceclean: distclean  ## Force clean everything.
 
 
 ## -- Outputs
+
+setup_x:
+	@echo "Starting XVFB for browser testing..."
+	@test -e /tmp/.X99-lock || sudo /usr/bin/Xvfb :99 &
 
 $(TARGET):
 	@echo "Building Bloombox API Client for JavaScript..."

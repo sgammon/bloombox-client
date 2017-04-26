@@ -21,8 +21,7 @@ module.exports = function(config) {
       ]
     },
     flags: [
-      '--web-security=false',
-      '--ignore-ssl-errors=true'
+      '--disable-web-security', '--headless', '--no-sandbox', '--ignore-ssl-errors=true'
     ],
     plugins: ["karma-spec-reporter", "karma-coverage", "karma-mocha", "karma-chai", "karma-chrome-launcher", "karma-safari-launcher"],
     files: [
