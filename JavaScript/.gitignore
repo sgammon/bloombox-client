@@ -1,5 +1,7 @@
 .DS_Store
 coverage/
+test-reports/
+reports/
 target/
 node_modules/
 components/

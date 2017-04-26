@@ -18,7 +18,7 @@
 
 /*global goog */
 goog.provide('bloombox.api.all');
-goog.require('bloombox.api.client.embed');
+goog.require('bloombox.api.embed');
 
 
 /** - exports - **/

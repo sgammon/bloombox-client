@@ -9,5 +9,9 @@
  * duly-authorized officer of Momentum Ideas, Co.
  */
 
-/*global goog */
-goog.provide('bloombox.api.embed');
+/**
+ * Bloombox Embed API for JavaScript.
+ *
+ * @fileoverview Provides support for the Embed API.
+ * @author sam@momentum.io (Sam Gammon)
+ */

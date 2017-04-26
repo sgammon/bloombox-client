@@ -13,7 +13,7 @@ BUILDBOT ?= 0
 ifeq ($(BUILDBOT),1)
 DEPENDENCY_COMMAND ?= npm install
 TEST_SETUP ?= setup_x
-TEST_ENVIRONMENT ?= DISPLAY=99.0 CHROME_BIN=$(which google-chrome)
+TEST_ENVIRONMENT ?= DISPLAY=:99 CHROME_BIN=$(which google-chrome)
 else
 DEPENDENCY_COMMAND ?= yarn
 TEST_SETUP ?=

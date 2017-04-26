@@ -31,7 +31,7 @@ var BloomboxAPIClientBehavior = {
      *
      * @type {BloomboxAPIClient}
      */
-    bloombox: {
+    'bloombox': {
       type: Object,
       notify: false,
       reflectToAttribute: false

@@ -52,10 +52,14 @@ let sourcePrefix = "src/",
           sourcePrefix + "api/exports.js",
         ]
       },
-      polymer: [
-        sourcePrefix + "polymer/bloombox-api-client.js",
-        sourcePrefix + "polymer/bloombox-api-client-behavior.js"
-      ]
+      polymer: {
+        component: [
+          sourcePrefix + "polymer/bloombox-api-client.js"
+        ],
+        behavior: [
+          sourcePrefix + "polymer/bloombox-api-client-behavior.js"
+        ]
+      }
     }
   },
 
@@ -91,6 +95,29 @@ let sourcePrefix = "src/",
           ]
         }
       },
+
+      vulcanize: {
+        polymer: {
+          stripComments: true,
+          stripExcludes: true,
+          stripWhitespace: true,
+          inlineScripts: true,
+          inlineCss: true
+        },
+        phase1: {
+          stripComments: true,
+          stripExcludes: true,
+          stripWhitespace: true,
+          inlineScripts: true,
+          inlineCss: true,
+          excludes: ['components/polymer/polymer.html']
+        }
+      },
+
+      crisper: {
+        scriptInHead: false,
+        onlySplit: true
+      }
     },
 
     config: {
@@ -102,14 +129,16 @@ let sourcePrefix = "src/",
          module: [
            "common:" + countSources(sources.scripts.common),
            "api:" + countSources(sources.scripts.api.minimal) + ":common",
-           "embed:" + countSources(sources.scripts.api.embed) + ":api",
-           "component:" + countSources(sources.scripts.polymer) + ":embed"
+           "embed:" + countSources(sources.scripts.api.embed) + ":common",
+           "bloombox-api-client-behavior:" + countSources(sources.scripts.polymer.behavior) + ":api",
+           "bloombox-api-client:" + countSources(sources.scripts.polymer.component) + ":api,bloombox-api-client-behavior"
          ],
          sources: []
            .concat(sources.scripts.common)
            .concat(sources.scripts.api.minimal)
            .concat(sources.scripts.api.embed)
-           .concat(sources.scripts.polymer)},
+           .concat(sources.scripts.polymer.behavior)
+           .concat(sources.scripts.polymer.component)},
         {closure: true,
          config: "advanced",
          target: "bloombox-api-client-" + _version,
@@ -164,8 +193,28 @@ function swallowError(err) {
   this.emit("end");
 }
 
+gulp.task('polymer:prebuild', function() {
+  var ops = [];
+  ops.push(gulp.src(['polymer/*'])
+      .pipe(vulcanize(bloom.params.vulcanize.phase1))
+      .pipe(crisper(bloom.params.crisper))
+      .pipe(gulp.dest(bloom.config.target)));
+  return merge(ops);
+});
+
+gulp.task('polymer:extract', ['polymer:prebuild'], function() {
+  var ops = [];
+  ops.push(gulp.src(outputDir('polymer/*.html'))
+      .pipe(polymerRename.extract())
+      .pipe(rename(function(filePath) {
+        filePath.basename += '.template';
+      }))
+      .pipe(gulp.dest(bloom.config.target)));
+  return merge(ops);
+});
+
 // JS
-gulp.task('apiclient:js:build', function () {
+gulp.task('apiclient:js:build', function() {
   var source_i, bundle, ops = [];
   for (source_i in bloom.config.scripts) {
     bundle = bloom.config.scripts[source_i];
@@ -177,9 +226,9 @@ gulp.task('apiclient:js:build', function () {
 
         // simple target
         ops.push(gulp.src(bundle.sources)
-          .pipe(googleClosureCompiler(targetConfig))
-          .on('error', reportError)
-          .pipe(gulp.dest(bloom.config.target)));
+            .pipe(googleClosureCompiler(targetConfig))
+            .on('error', reportError)
+            .pipe(gulp.dest(bloom.config.target)));
       } else {
         let moduleConfig = _.extend({}, bloom.params.closure.base, bloom.params.closure[bundle.config], {
           module: bundle.module
@@ -187,14 +236,14 @@ gulp.task('apiclient:js:build', function () {
 
         // it's a module-based deal
         ops.push(gulp.src(bundle.sources)
-          .pipe(googleClosureCompiler(moduleConfig))
-          .pipe(gulp.dest(bloom.config.target)));
+            .pipe(googleClosureCompiler(moduleConfig))
+            .pipe(gulp.dest(bloom.config.target)));
       }
     } else {
       ops.push(gulp.src(bundle.sources)
-        .pipe(concat(bundle.target + ".js"))
-        .on('error', reportError)
-        .pipe(gulp.dest(bloom.config.target)));
+          .pipe(concat(bundle.target + '.js'))
+          .on('error', reportError)
+          .pipe(gulp.dest(bloom.config.target)));
     }
   }
   return merge(ops);
@@ -205,7 +254,7 @@ gulp.task('clean', function (cb) {
   del(['target/*'], cb);
 });
 
-gulp.task('copy', function () {
+gulp.task('copy', function() {
   return gulp.src([
     'demo.html'
   ], {
@@ -213,24 +262,24 @@ gulp.task('copy', function () {
   }).pipe(gulp.dest(outputDir()));
 });
 
-gulp.task('serve', function () {
+gulp.task('serve', function() {
   browserSync({
     notify: false,
     server: {
       baseDir: ['target'],
     },
-    startPath: "/demo.html"
+    startPath: '/demo.html'
   });
 
   gulp.watch(['src/**/*.*', 'demo.html'], ['default', reload]);
 });
 
-gulp.task('pre-test', function () {
+gulp.task('pre-test', function() {
   return gulp.src(['src/**/*.js'])
-    // Covering files
-    .pipe(istanbul())
-    // Force `require` to return covered files
-    .pipe(istanbul.hookRequire());
+      // Covering files
+      .pipe(istanbul())
+      // Force `require` to return covered files
+      .pipe(istanbul.hookRequire());
 });
 
 gulp.task('test', ['pre-test'], function(done) {
@@ -242,8 +291,8 @@ gulp.task('test', ['pre-test'], function(done) {
     },
     reporters: ['progress', 'coverage'],
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/',
+      type: 'html',
+      dir: 'coverage/',
       subdir: '.'
     }
   }, done).on('error', function(err) {
@@ -256,7 +305,7 @@ gulp.task('coverage', function() {
              .pipe(open());
 });
 
-gulp.task('develop', ['default', 'coverage'], function (done) {
+gulp.task('develop', ['default', 'coverage'], function(done) {
   new Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true
@@ -267,12 +316,12 @@ gulp.task('develop', ['default', 'coverage'], function (done) {
     server: {
       baseDir: ['target'],
     },
-    startPath: "/demo.html"
+    startPath: '/demo.html'
   });
 
   gulp.watch(['src/**/*.*', 'test/**/*.*', 'demo.html'], ['default', reload]);
 });
 
-gulp.task('default', ['copy', 'apiclient:js:build']);
+gulp.task('default', ['copy', 'polymer:extract', 'apiclient:js:build']);
 
 try { require('require-dir')('tasks'); } catch (err) {}

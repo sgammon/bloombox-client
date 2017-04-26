@@ -25,9 +25,10 @@ var BloomboxAPIClientElement = Polymer({
      *
      * @type {string}
      */
-    apiKey: {
+    'apiKey': {
       type: String,
-      notify: true
+      notify: false,
+      reflectToAttribute: false
     },
 
     /**
@@ -37,9 +38,10 @@ var BloomboxAPIClientElement = Polymer({
      *
      * @type {string}
      */
-    partner: {
+    'partner': {
       type: String,
-      notify: true
+      notify: false,
+      reflectToAttribute: false
     },
 
     /**
@@ -50,9 +52,10 @@ var BloomboxAPIClientElement = Polymer({
      *
      * @type {string}
      */
-    location: {
+    'location': {
       type: String,
-      notify: true
+      notify: false,
+      reflectToAttribute: false
     }
   }
 });
