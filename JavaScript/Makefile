@@ -3,6 +3,8 @@
 ## Makefile: Bloombox API Client for JavaScript
 #
 
+VERSION ?= 0.0.1
+
 TARGET ?= target
 DEPENDENCIES ?= node_modules components
 
@@ -19,6 +21,11 @@ test: $(DEPENDENCIES) $(TARGET)  ## Run the testsuite for the JavaScript client,
 	@gulp test
 
 release: clean build test  ## Clean, and then build a release copy of the JavaScript client.
+	@echo "Building release tarball bloombox-js-client-$(VERSION).tar.gz..."
+	@mv $(TARGET) bloombox-js-client-$(VERSION) && \
+		tar -czvf bloombox-js-client-$(VERSION).tar.gz bloombox-js-client-$(VERSION) && \
+		mv bloombox-js-client-$(VERSION) $(TARGET);
+	@echo "Release tarball ready."
 
 demo: release  ## Build the JavaScript client and open a demo page.
 	@echo "Starting demo server..."
