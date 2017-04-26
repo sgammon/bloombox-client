@@ -16,11 +16,14 @@
  * @author sam@momentum.io (Sam Gammon)
  */
 
+goog.require('bloombox.api.all');
+goog.require('bloombox.api.client');
+goog.require('bloombox.common.api');
+goog.require('bloombox.common.logging');
+
 
 /** - exports - **/
 window['BloomboxAPI'] = BloomboxAPI;
-window['EmbedAPI'] = EmbedAPI;
-window['EmbeddedMenu'] = EmbeddedMenu;
 window['BloomboxAPIClient'] = BloomboxAPIClient;
 window['RPC'] = RPC;
 window['Logging'] = Logging;

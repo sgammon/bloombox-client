@@ -39,11 +39,11 @@ let sourcePrefix = "src/",
         minimal: [
           sourcePrefix + "api/_base.js",
           sourcePrefix + "api/tools.js",
-          sourcePrefix + "api/client.js",
           sourcePrefix + "api/all.js",
+          sourcePrefix + "api/client.js",
           sourcePrefix + "api/exports.js"
         ],
-        all: [
+        full: [
           sourcePrefix + "api/_base.js",
           sourcePrefix + "api/tools.js",
           sourcePrefix + "api/client.js",
@@ -102,8 +102,8 @@ let sourcePrefix = "src/",
          module: [
            "common:" + countSources(sources.scripts.common),
            "api:" + countSources(sources.scripts.api.minimal) + ":common",
-           "embed:" + countSources(sources.scripts.api.embed) + ":common",
-           "component:" + countSources(sources.scripts.polymer) + ":api"
+           "embed:" + countSources(sources.scripts.api.embed) + ":api",
+           "component:" + countSources(sources.scripts.polymer) + ":embed"
          ],
          sources: []
            .concat(sources.scripts.common)
@@ -116,7 +116,7 @@ let sourcePrefix = "src/",
          sources: []
            .concat(sources.scripts.common)
            .concat(sources.scripts.api.embed)
-           .concat(sources.scripts.api.all)}]}};
+           .concat(sources.scripts.api.full)}]}};
 
 function renameCompiledJs() {
   return (function (path) {

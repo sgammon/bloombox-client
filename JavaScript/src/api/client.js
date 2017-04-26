@@ -17,7 +17,6 @@
 
 /*global goog */
 goog.provide('bloombox.api.client');
-goog.require('bloombox.api.all');
 
 
 
