@@ -24,6 +24,7 @@
   "devDependencies": {
     "browser-sync": "^2.18.8",
     "chai": "^3.5.0",
+    "del": "^2.2.2",
     "google-closure-compiler": "^20170218.0.0",
     "gulp": "^3.8.5",
     "gulp-crisper": "^1.1.0",
