@@ -1,6 +1,9 @@
 
 # Bloombox API Client: Python
 
+[![Build Status](https://buildbot.hq.mm-corp.systems/jenkins/buildStatus/icon?job=Bloombox/Clients/Python)](https://codeclimate.com/github/Bloombox/api-client-python)
+[![Code Climate](https://codeclimate.com/github/Bloombox/api-client-python.png)](https://codeclimate.com/github/Bloombox/api-client-python)
+
 This Python egg, available via PyPI, exposes a Python interface for accessing [Bloombox](https://bloombox.io) APIs.
 It's built using [Google Cloud Endpoints](https://cloud.google.com/appengine/docs/standard/java/endpoints/),
 [Swagger/OpenAPI](http://swagger.io/) and the [Google API Client for Python](https://developers.google.com/api-client-library/python/).

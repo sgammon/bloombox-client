@@ -1,6 +1,8 @@
 
 # Bloombox API Client: JavaScript
 
+[![Build Status](https://buildbot.hq.mm-corp.systems/jenkins/buildStatus/icon?job=Bloombox/Clients/JavaScript)](https://codeclimate.com/github/Bloombox/api-client-javascript)
+[![Code Climate](https://codeclimate.com/github/Bloombox/api-client-javascript.png)](https://codeclimate.com/github/Bloombox/api-client-javascript)
 
 This package, available via NPM, Yarn and Bower, presents an interface for accessing [Bloombox](https://bloombox.io)
 APIs. It's built using [Google Cloud Endpoints](https://cloud.google.com/appengine/docs/standard/java/endpoints/),
