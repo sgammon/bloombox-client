@@ -14,10 +14,12 @@ ifeq ($(BUILDBOT),1)
 DEPENDENCY_COMMAND ?= npm install
 TEST_SETUP ?= setup_x
 TEST_ENVIRONMENT ?= DISPLAY=:99 CHROME_BIN=$(which google-chrome)
+TEST_COMMAND ?= node_modules/karma/bin/karma
 else
 DEPENDENCY_COMMAND ?= yarn
 TEST_SETUP ?=
 TEST_ENVIRONMENT ?=
+TEST_COMMAND ?= karma
 endif
 
 
@@ -30,7 +32,7 @@ build: $(DEPENDENCIES) $(TARGET)  ## Build the JavaScript client.
 
 test: $(DEPENDENCIES) $(TARGET) $(TEST_SETUP)  ## Run the testsuite for the JavaScript client, atop PhantomJS.
 	@echo "Running JavaScript Client testsuite..."
-	@$(TEST_ENVIRONMENT) karma start --single-run
+	@$(TEST_ENVIRONMENT) $(TEST_COMMAND) start --single-run
 
 release: clean build test  ## Clean, and then build a release copy of the JavaScript client.
 	@echo "Building release tarball bloombox-js-client-$(VERSION).tar.gz..."
