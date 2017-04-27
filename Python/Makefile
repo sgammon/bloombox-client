@@ -14,7 +14,7 @@ OUTPUTS ?= base purelib platlib lib
 
 ifeq ($(BUILDBOT),1)
 PIP = $(shell pwd)/bin/pip
-NOSETESTS = $(shell pwd)/bin/nosetests
+NOSETESTS = $(shell pwd)/bin/nosetests -v
 else
 PIP = bin/pip
 NOSETESTS = bin/nosetests

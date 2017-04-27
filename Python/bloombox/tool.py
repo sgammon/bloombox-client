@@ -37,6 +37,7 @@ class Bloombox(cli.Tool):
     ("--debug", "-d", {"action": "store_true", "help": "output debug info"}),
     ("--quiet", "-q", {"action": "store_true", "help": "suppress most output"}),
     ("--verbose", "-v", {"action": "count", "help": "output a lot of useful info"}),
+    ("--no-colors", {"action": "store_true", "help": "don't output colorized logs"}),
     ("--logging", "-ll", {"type": str, "metavar": "L", "default": "ERROR", "help": "logging level name"}),
     ("--version", "-V", {"action": "version", "help": "print version and exit", "version":
         "bloombox CLI %s" % version_label()}))

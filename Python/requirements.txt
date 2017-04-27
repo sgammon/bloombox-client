@@ -1,5 +1,6 @@
 nose
 colorlog
+colorama
 Jinja2==2.7.3
 MarkupSafe==0.23
 werkzeug==0.9.6

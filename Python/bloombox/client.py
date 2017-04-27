@@ -28,7 +28,7 @@ _old_stderr = sys.stderr
 discovery_url = lambda root, api, version: "%s/discovery/v1/apis/%s/%s/rest" % (root, api, version)
 
 
-def build_service(arguments, root, api, version):
+def build_service(arguments, root, api, version, authorized=True):
 
   """ Build a service for a given API and version. """
 
@@ -49,7 +49,7 @@ def build_service(arguments, root, api, version):
       httplib2.debuglevel = 4
       logger.setLevel(10)
 
-  http = auth.authenticate(http, arguments)
+  http = auth.authenticate(http, arguments, authorize=authorized)
 
   # build our service
   discoveryUrl = discovery_url(root, api, version)
@@ -61,8 +61,8 @@ def build_service(arguments, root, api, version):
   return service
 
 
-def get_client(arguments, api, version):
+def get_client(arguments, api, version, authorized=True):
 
   """ Get an API client for a given API and version under ``arguments``. """
 
-  return build_service(arguments, API_ROOT, api, version)
+  return build_service(arguments, API_ROOT, api, version, authorized=authorized)

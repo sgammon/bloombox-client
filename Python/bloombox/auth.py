@@ -85,14 +85,15 @@ def prep_flags(flags):
 
   """ Prepare an arguments object with flags for the auth flow. """
 
-  setattr(flags, "logging_level", flags.logging)
-  setattr(flags, "auth_host_name", "localhost")
-  setattr(flags, "auth_host_port", [8000, 8085])
-  setattr(flags, "noauth_local_webserver", False)
+  if flags:
+    setattr(flags, "logging_level", flags.logging)
+    setattr(flags, "auth_host_name", "localhost")
+    setattr(flags, "auth_host_port", [8000, 8085])
+    setattr(flags, "noauth_local_webserver", False)
   return flags
 
 
-def authenticate(http, flags):
+def authenticate(http, flags, authorize=True):
 
   """ Authorize an HTTP request for use with the REST/RPC API. """
 
@@ -100,12 +101,11 @@ def authenticate(http, flags):
   global storage
   global flow
 
-  if credentials is None or credentials.invalid:
-
-    # setup args
-    flags = prep_flags(flags)
-    credentials = tools.run_flow(flow, storage, flags)
-
-  credentials = storage.get()
-  credentials.authorize(http)
+  if authorize:
+    if credentials is None or credentials.invalid:
+      # setup args
+      flags = prep_flags(flags)
+      credentials = tools.run_flow(flow, storage, flags)
+      credentials = storage.get()
+      credentials.authorize(http)
   return http

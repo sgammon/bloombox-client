@@ -10,9 +10,10 @@ __doc__ = """
 import sys
 import json
 import pprint
-from StringIO import StringIO
 from oauth2client import tools
 from googleapiclient.errors import HttpError
+
+from . import colors
 
 
 # Globals
@@ -20,22 +21,85 @@ _old_stdout = sys.stdout
 _old_stderr = sys.stderr
 pretty_printer = pprint.PrettyPrinter(indent=4)
 
+QUIET = False
+VERBOSE = False
+COLORS = True
+
+
+def verbose(message):
+
+  """ Say a verbose-level log message. """
+
+  message = "[Bloombox]: %s" % message
+  if not QUIET and VERBOSE:
+    if COLORS:
+      colors.gray(message)
+    else:
+      print message
+
+
+def say(message):
+
+  """ Say an info-level log message. """
+
+  message = "[Bloombox]: %s" % message
+  if not QUIET:
+    if COLORS:
+      colors.cyan(message)
+    else:
+      print message
+
+
+def warn(message):
+
+  """ Say a warning-level log message. """
+
+  message = "[Bloombox]: %s" % message
+  if not QUIET and VERBOSE:
+    if COLORS:
+      colors.yellow(message)
+    else:
+      print message
+
+
+def success(message):
+
+  """ Say a success-level log message. """
+
+  message = "[Bloombox]: %s" % message
+  if not QUIET:
+    if COLORS:
+      colors.green(message)
+    else:
+      print message
+
+
+def error(message):
+
+  """ Say a success-level log message. """
+
+  message = "[Bloombox]: %s" % message
+  if COLORS:
+    colors.red(message)
+  else:
+    print message
+
 
 def execute(arguments, request, fail_on_error=True, fail_on_403=False):
 
   """ Execute an RPC request, handling some common errors that may occur. """
 
-  if arguments and arguments.debug:
+  if arguments and arguments.debug:  # pragma: no cover
     import pdb; pdb.set_trace()
 
   try:
     result = request.execute()
-  except HttpError as e:
+  except HttpError as e:  # pragma: no cover
     if e.resp["status"] == "404":
       return None
     elif e.resp["status"] == "403":
       if fail_on_403:
-        print "Exiting on 403."
+        error("Exiting on 403.")
         exit(1)
       else:
         from .auth import flow, prep_flags, storage, reset_creds, install_creds
@@ -50,25 +114,25 @@ def execute(arguments, request, fail_on_error=True, fail_on_403=False):
     else:
       if fail_on_error:
         raise APIError(e.resp, e.content)
-      if arguments.debug:
-        print "Received unrecognized error in underlying API. Entering debug shell.."
+      error("Received unrecognized error in underlying API.")
+      if arguments and arguments.debug:
         import pdb; pdb.set_trace()
 
   return result
 
 
-def confirm(question="Does this look right?", default="y"):
+def confirm(question="Does this look right?", default="y"):  # pragma: no cover
 
   """ Confirm an operation with the user, with a y/n-style prompt. """
 
   result = raw_input("%s [y/n, enter for %s]: " % (question, default))
   if result is None or result == "": result = default
-  
+
   if result != "y":
-    print "Exiting on user command."
+    error("Exiting on user command.")
     sys.exit(0)
   else:
-    print "Continuing with operation."
+    verbose("Continuing with operation.")
 
 
 def object_output(obj):
@@ -82,11 +146,11 @@ def keyed_output_items(arguments, raw_response, section, iterable, labelgetter):
 
   """ Output a set of keyed items, such as a response from a `list`-style method. """
 
-  if arguments.json:
+  if arguments and arguments.json:
     print json.dumps(raw_response)
   else:
-    if not arguments.quiet: print section + ":"
-    
+    if arguments and not arguments.quiet: print section + ":"
+
     for i, item in enumerate(iterable):
       label = labelgetter(iterable[i])
       print "-- %s" % label
@@ -95,6 +159,19 @@ def keyed_output_items(arguments, raw_response, section, iterable, labelgetter):
         for key, value in iterable[i]["data"].iteritems():
           print "  [%s]: %s" % (key, value)
         print "\n"
+
+
+def _apply_logging_settings(arguments):  # pragma: no cover
+
+  """ Apply logging config from command line arguments. """
+
+  global QUIET
+  global VERBOSE
+  global COLORS
+
+  QUIET = arguments.quiet or False
+  VERBOSE = arguments.verbose or False
+  COLORS = arguments.colors or False
 
 
 class APIError(HttpError):

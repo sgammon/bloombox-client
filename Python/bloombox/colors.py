@@ -38,3 +38,10 @@ def cyan(message):
   """ Output a cyan message. """
 
   print Fore.CYAN + message + Fore.RESET + Style.RESET_ALL
+
+
+def gray(message):
+
+  """ Output a gray message. """
+
+  print Fore.LIGHTBLACK_EX + message + Fore.RESET + Style.RESET_ALL
