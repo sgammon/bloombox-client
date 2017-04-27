@@ -39,22 +39,23 @@ def build_service(arguments, root, api, version):
   if http is None:
     http = httplib2.Http()
 
-  if arguments.verbose:
-    logger.setLevel(20)
-  else:
-    logger.setLevel(30)
-  if arguments.quiet:
-    logger.setLevel(50)
-  if arguments.debug:
-    httplib2.debuglevel = 4
-    logger.setLevel(10)
+  if arguments:
+    if arguments.verbose:
+      logger.setLevel(20)
+    else:
+      logger.setLevel(30)
+    if arguments.quiet:
+      logger.setLevel(50)
+    if arguments.debug:
+      httplib2.debuglevel = 4
+      logger.setLevel(10)
 
   http = auth.authenticate(http, arguments)
 
   # build our service
   discoveryUrl = discovery_url(root, api, version)
 
-  if arguments.verbose:
+  if arguments and arguments.verbose:
     print "Discovering service at endpoint %s..." % discoveryUrl
 
   service = discovery.build(api, version, discoveryServiceUrl=discoveryUrl, http=http, developerKey=auth.API_KEY, cache_discovery=False)

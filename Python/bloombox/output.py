@@ -25,7 +25,7 @@ def execute(arguments, request, fail_on_error=True, fail_on_403=False):
 
   """ Execute an RPC request, handling some common errors that may occur. """
 
-  if arguments.debug:
+  if arguments and arguments.debug:
     import pdb; pdb.set_trace()
 
   try:
@@ -39,10 +39,11 @@ def execute(arguments, request, fail_on_error=True, fail_on_403=False):
         exit(1)
       else:
         from .auth import flow, prep_flags, storage, reset_creds, install_creds
-        reset_creds(arguments)
-        flags = prep_flags(arguments)
-        tools.run_flow(flow, storage, flags)
-        install_creds(arguments)
+        if arguments:
+          reset_creds(arguments)
+          flags = prep_flags(arguments)
+          tools.run_flow(flow, storage, flags)
+          install_creds(arguments)
 
         # okay, if we didn't hit an exception... retry
         return execute(arguments, request, fail_on_403=True)

@@ -28,6 +28,8 @@ class Embed(cli.Tool):
   EMBED_SERVICE = "embed"
   EMBED_VERSION = "v1"
 
+  embed_service = None
+
 
   class Data(cli.Tool):
 
@@ -58,7 +60,7 @@ class Embed(cli.Tool):
 
       client.auth.prepare_auth("Bloombox CLI", client_secret, client_id, key)
       embed_service = Embed.embed_service = client.get_client(arguments, Embed.EMBED_SERVICE, Embed.EMBED_VERSION)
-      menu_data = Embed.data(arguments, arguments.partner, arguments.location)
+      menu_data = Embed.data(arguments.partner, arguments.location, arguments)
       output.object_output(menu_data)
 
 
@@ -90,22 +92,26 @@ class Embed(cli.Tool):
 
       client.auth.prepare_auth("Bloombox CLI", client_secret, client_id, key)
       embed_service = Embed.embed_service = client.get_client(arguments, Embed.EMBED_SERVICE, Embed.EMBED_VERSION)
-      view_data = Embed.view(arguments, arguments.partner, arguments.location, arguments.style)
+      view_data = Embed.view(arguments.partner, arguments.location, arguments.style, arguments)
       output.object_output(view_data)
 
 
   @staticmethod
-  def data(arguments, partner, location):
+  def data(partner, location, arguments=None):
 
     """ Formulate and execute an RPC to retrieve embedded menu data. """
 
+    if Embed.embed_service is None:
+      Embed.embed_service = client.get_client(arguments, Embed.EMBED_SERVICE, Embed.EMBED_VERSION)
     return output.execute(arguments, Embed.embed_service.data(partner=partner, location=location))
 
   @staticmethod
-  def view(arguments, partner, location, style):
+  def view(partner, location, style="MASTER_ONLY", arguments=None):
 
     """ Formulate and execute an RPC to fetch view info for an embedded menu. """
 
+    if Embed.embed_service is None:
+      Embed.embed_service = client.get_client(arguments, Embed.EMBED_SERVICE, Embed.EMBED_VERSION)
     return output.execute(arguments, Embed.embed_service.view(partner=partner, location=location, style=style))
 
 

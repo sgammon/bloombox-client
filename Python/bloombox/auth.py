@@ -66,7 +66,7 @@ def reset_creds(arguments):
   """ Reset OAuth2 credential state. """
 
   global credentials
-  if arguments.verbose:
+  if arguments and arguments.verbose:
     print "Resetting credentials..."
   credentials = None
 

@@ -63,7 +63,7 @@ lib/python2.7/site-packages/bloombox.pth:
 
 help:  ## Show this help text.
 	@echo
-	@echo "Bloombox API: JavaScript Client"
+	@echo "Bloombox API: Python Client"
 	@echo
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 	@echo
