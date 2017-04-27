@@ -33,6 +33,8 @@ test: $(TARGET)  ## Run the testsuite for the Python client.
 	    --cover-package=bloombox \
 	    --cover-html \
 	    --cover-html-dir=$(REPORTS)coverage-html \
+	    --cover-xml \
+	    --cover-xml-file=$(REPORTS)coverage.xml \
 	    --with-xunit \
 	    --xunit-file=$(REPORTS)xunit.xml \
 	    --xunit-testsuite-name=bloombox-api-client;
