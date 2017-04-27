@@ -1,0 +1,13 @@
+*.pyc
+**/*.pyc
+.Python
+man
+bin
+include
+lib
+.oauth2client.dat
+Python.iws
+.coverage
+reports/
+.idea/workspace.xml
+build/
