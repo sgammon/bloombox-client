@@ -59,6 +59,7 @@ $(TARGET): .Python bin/bloombox lib/python2.7/site-packages/bloombox.pth test  #
 
 bin/bloombox:
 	@echo "Symlinking Bloombox CLI..."
+	@rm -fv $(shell pwd)/bin/bloombox
 	@ln -s $(shell pwd)/src/bloombox/__main__.py $(shell pwd)/bin/bloombox
 	@chmod +x $(shell pwd)/bin/bloombox
 
