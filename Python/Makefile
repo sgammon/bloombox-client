@@ -6,6 +6,18 @@
 TARGET ?= target/
 REPORTS ?= reports/
 
+BUILDBOT ?= 0
+
+
+ifeq ($(BUILDBOT),1)
+PIP = $(shell pwd)/bin/pip
+NOSETESTS = $(shell pwd)/bin/nosetests
+else
+PIP = bin/pip
+NOSETESTS = bin/nosetests
+endif
+
+
 ## -- Commands
 
 all: build  ## Default routine - build the Python client.
@@ -16,7 +28,7 @@ build: .Python bin/bloombox lib/python2.7/site-packages/bloombox.pth $(TARGET)  
 test: $(TARGET)  ## Run the testsuite for the Python client.
 	@echo "Running Python client testsuite..."
 	@mkdir -p $(REPORTS)
-	@bin/nosetests \
+	@$(NOSETESTS) \
 	    --with-coverage \
 	    --cover-package=bloombox \
 	    --cover-html \
@@ -58,8 +70,8 @@ lib/python2.7/site-packages/bloombox.pth:
 .Python:
 	@echo "Preparing virtualenv..."
 	@virtualenv --prompt="[Bloombox API Client] " .
-	@./bin/pip install python-dateutil werkzeug "Jinja2==2.7.3" "protorpc==0.9.1" "git+https://github.com/sgammon/protobuf.git#egg=protobuf"
-	@./bin/pip install -r requirements.txt --upgrade
+	@$(PIP) install python-dateutil werkzeug "Jinja2==2.7.3" "protorpc==0.9.1" "git+https://github.com/sgammon/protobuf.git#egg=protobuf"
+	@$(PIP) install -r requirements.txt --upgrade
 
 help:  ## Show this help text.
 	@echo
