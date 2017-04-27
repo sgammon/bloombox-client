@@ -2,8 +2,12 @@
 
 __doc__ = """
 
-  bloombox for Python
+  Bloombox API Client for Python
 
 """
 
 from .tool import Bloombox
+
+
+
+__version__ = (0, 0, 1)

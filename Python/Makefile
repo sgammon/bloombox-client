@@ -3,10 +3,13 @@
 ## Makefile: Bloombox API Client for Python
 #
 
-TARGET ?= target/
+TARGET ?= build
 REPORTS ?= reports/
+SRC ?= ./
 
 BUILDBOT ?= 0
+
+OUTPUTS ?= base purelib platlib lib
 
 
 ifeq ($(BUILDBOT),1)
@@ -22,13 +25,10 @@ endif
 
 all: build  ## Default routine - build the Python client.
 
-build: .Python bin/bloombox lib/python2.7/site-packages/bloombox.pth test $(TARGET)  # Build the Python client.
-	@echo "Ready to work with Bloombox API client."
-
-test: $(TARGET)  ## Run the testsuite for the Python client.
+test:  ## Run the testsuite for the Python client.
 	@echo "Running Python client testsuite..."
 	@mkdir -p $(REPORTS)
-	@$(NOSETESTS) \
+	@cd $(SRC) && $(NOSETESTS) \
 	    --with-coverage \
 	    --cover-package=bloombox \
 	    --cover-html \
@@ -53,13 +53,13 @@ forceclean: distclean  ## Force clean everything.
 
 
 ## -- Outputs
-
-$(TARGET):
-	@echo "Building Bloombox API Client for Python..."	
+$(TARGET): .Python bin/bloombox lib/python2.7/site-packages/bloombox.pth test  # Build the Python client.
+	@echo "Building Bloombox API Client for Python..."
+	@bin/python setup.py build build_py bdist bdist_dumb bdist_egg sdist
 
 bin/bloombox:
 	@echo "Symlinking Bloombox CLI..."
-	@ln -s $(shell pwd)/bloombox/__main__.py $(shell pwd)/bin/bloombox
+	@ln -s $(shell pwd)/src/bloombox/__main__.py $(shell pwd)/bin/bloombox
 	@chmod +x $(shell pwd)/bin/bloombox
 
 lib/python2.7/site-packages/bloombox.pth:
@@ -83,4 +83,4 @@ help:  ## Show this help text.
 	@echo
 
 
-.PHONY: all build release clean
+.PHONY: all release clean

@@ -9,3 +9,5 @@ lib
 Python.iws
 .coverage
 reports/
+.idea/workspace.xml
+build/

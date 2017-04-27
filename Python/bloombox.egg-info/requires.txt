@@ -1,0 +1,14 @@
+nose
+colorlog
+Jinja2==2.7.3
+MarkupSafe==0.23
+werkzeug==0.9.6
+protorpc==0.9.1
+coverage==3.7.1
+msgpack-python==0.4.4
+oauth2client<4.0.0
+google-api-python-client
+protobuf
+hamlish_jinja
+python-dateutil==2.4.0
+canteen

@@ -6,17 +6,16 @@ __doc__ = """
 
 """
 
+import logging
 # stdlib
 import sys
-import logging
-from StringIO import StringIO
-
-# local
-from . import auth
 
 # google
 import httplib2
 from apiclient import discovery
+
+# local
+from . import auth
 
 ## Constants
 API_ROOT = "https://api-dot-bloombox-io.appspot.com/_ah/api/"

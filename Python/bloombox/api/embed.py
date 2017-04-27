@@ -7,17 +7,15 @@ __doc__ = """
 """
 
 # std
-import json
 
 # googs
-import apiclient
+
+# canteen
+from canteen.util import cli
 
 # local
 from .. import client
 from .. import output
-
-# canteen
-from canteen.util import cli
 
 
 class Embed(cli.Tool):
@@ -45,9 +43,9 @@ class Embed(cli.Tool):
 
       import pdb; pdb.set_trace()
 
-      key = arguments.apikey or client.auth.API_KEY
-      client_id = arguments.client or client.auth.CLIENT_ID
-      client_secret = arguments.secret or client.auth.CLIENT_SECRET
+      key = arguments.apikey or bloombox.auth.API_KEY
+      client_id = arguments.client or bloombox.auth.CLIENT_ID
+      client_secret = arguments.secret or bloombox.auth.CLIENT_SECRET
       if not key:
         print "Must provide a valid API key via '--apikey'. For more info, run 'bloombox --help'."
         exit(1)
@@ -58,7 +56,7 @@ class Embed(cli.Tool):
         print "Must provide a valid client secret via '--secret'. For more info, run 'bloombox --help'."
         exit(1)
 
-      client.auth.prepare_auth("Bloombox CLI", client_secret, client_id, key)
+      bloombox.auth.prepare_auth("Bloombox CLI", client_secret, client_id, key)
       embed_service = Embed.embed_service = client.get_client(arguments, Embed.EMBED_SERVICE, Embed.EMBED_VERSION)
       menu_data = Embed.data(arguments.partner, arguments.location, arguments)
       output.object_output(menu_data)
@@ -77,9 +75,9 @@ class Embed(cli.Tool):
 
       """ Retrieve embedded menu view metadata. """
 
-      key = arguments.apikey or client.auth.API_KEY
-      client_id = arguments.client or client.auth.CLIENT_ID
-      client_secret = arguments.secret or client.auth.CLIENT_SECRET
+      key = arguments.apikey or bloombox.auth.API_KEY
+      client_id = arguments.client or bloombox.auth.CLIENT_ID
+      client_secret = arguments.secret or bloombox.auth.CLIENT_SECRET
       if not key:
         print "Must provide a valid API key via '--apikey'. For more info, run 'bloombox --help'."
         exit(1)
@@ -90,7 +88,7 @@ class Embed(cli.Tool):
         print "Must provide a valid client secret via '--secret'. For more info, run 'bloombox --help'."
         exit(1)
 
-      client.auth.prepare_auth("Bloombox CLI", client_secret, client_id, key)
+      bloombox.auth.prepare_auth("Bloombox CLI", client_secret, client_id, key)
       embed_service = Embed.embed_service = client.get_client(arguments, Embed.EMBED_SERVICE, Embed.EMBED_VERSION)
       view_data = Embed.view(arguments.partner, arguments.location, arguments.style, arguments)
       output.object_output(view_data)

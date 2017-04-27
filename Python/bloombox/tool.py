@@ -14,12 +14,8 @@ from canteen.util import cli
 
 # utils
 from . import auth
-from . import client
-from . import output
-
 # subtools
 from .api import embed
-
 
 ## Lambdas
 version_label = lambda: ".".join(map(unicode, __version__))

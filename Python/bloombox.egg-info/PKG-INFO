@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: bloombox
+Version: 0.0.1
+Summary: A sample Python project
+Home-page: https://github.com/bloombox/api-client-python
+Author: Sam Gammon
+Author-email: sam@momentum.io
+License: Apache 2.0
+Description: Bloombox API Client for Python
+Keywords: api client bloombox
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: Apache 2.0
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
