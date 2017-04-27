@@ -22,7 +22,7 @@ endif
 
 all: build  ## Default routine - build the Python client.
 
-build: .Python bin/bloombox lib/python2.7/site-packages/bloombox.pth $(TARGET)  # Build the Python client.
+build: .Python bin/bloombox lib/python2.7/site-packages/bloombox.pth test $(TARGET)  # Build the Python client.
 	@echo "Ready to work with Bloombox API client."
 
 test: $(TARGET)  ## Run the testsuite for the Python client.
@@ -37,7 +37,7 @@ test: $(TARGET)  ## Run the testsuite for the Python client.
 	    --xunit-file=$(REPORTS)xunit.xml \
 	    --xunit-testsuite-name=bloombox-api-client;
 
-release: clean build  ## Clean, and then build a release copy of the Python client.
+release: clean build test  ## Clean, and then build a release copy of the Python client.
 
 clean:  ## Clean ephemeral build files.
 	@echo "Cleaning Python client..."
