@@ -3,7 +3,7 @@ colorlog
 colorama
 Jinja2==2.7.3
 MarkupSafe==0.23
-werkzeug==0.9.6
+werkzeug==3.0.1
 protorpc==0.9.1
 coverage==3.7.1
 msgpack-python==0.4.4
